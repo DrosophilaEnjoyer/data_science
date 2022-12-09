@@ -1,0 +1,92 @@
+---
+title: "Reproducible data science"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#### Question 1: What is the reproducibility crisis in science and should we care?
+
+The reproducibility crisis in science is the inability for researchers to reproduce the results of existing studies. This can be due to a lack of documentation of methods or code used in a study. This means that when someone comes along who wishes to recreate the study they cannot do so easily, and so errors can accumulate in the forms of differences in the original and reproduced study. This can result in a failure to reproduce the study.
+
+The reproducibility crisis can cause resources to be wasted as researchers need to repeat work that has already been done or spend time getting in contact with the original creator personally. Reducing the guess work and time spent re-designing an experiment to gather data and as well as reduced time spent coding also results in could be extremely beneficial. Furthermore, having reproducible research can lead to more citations of your work and increased exposure in the media as it becomes more prevalent in the scientific community. This can also have knock on effects such as increased availability of collaborators who want to work with you. Therefore it can be beneficial to ones own career to implement methods which make your work reproducible. By making all data more reproducible it also allows for studies which may not be accurate to be more easily identified, this is because the as it stands now most researchers believe that failure to reproduce an experiment doesn't mean there is anything wrong with the original. If studies were easier to reproduce then failure to do so could indicate a study was carried out poorly or the findings are incorrect.
+
+To conclude reproducible science is important because it helps ensure that the results of research are reliable and valid. When science is reproducible, it means that other researchers can follow the same steps and obtain the same results. This increases confidence in the results and ensures that the research findings can be trusted and applied to real-world applications. It also helps to prevent mistakes and fraudulent claims from being made. Reproducibility is essential for the advancement of science and for ensuring that research is valid and reliable and therefore we should be doing all we can to tackle the reproducibility crisis in science.
+
+#### Question 2: **Create a figure using the Palmer Penguin dataset that is correct but badly communicates the data.**
+
+For this diagram i chose a histogram showing frequency of Culmen Depths, however the low bin number meant that it is not very accurate as it shows only one peak around 16 which is not the case in reality, as two peaks are present. It is also in light grey which makes it harder to distinguish from the background especially if it is being seen from a distance. Finally the font size for all the axis and labels are far to small and so don't convey any information about what the histogram is displaying. Almost no information at all can be determined from looking at the graph despite the graph technically being correct.
+
+```{r}
+install.packages("palmerpenguins")
+
+install.packages('tinytex')
+library("tinytex")
+require(mosaic)
+library(mosaic)
+require(oilabs)
+require(dplyr)
+install.packages("ragg")
+install.packages("svglite")
+library(palmerpenguins)
+library(ggplot2)
+suppressPackageStartupMessages(library(janitor))
+suppressPackageStartupMessages(library(dplyr))
+library(tidyr)
+library(ragg)
+library(svglite)
+
+setwd("C:/Users/Public/Documents/reproducible_data_science")
+write.csv(penguins_raw,(file = "C:/Users/Public/Documents/reproducible_data_science/penguins_raw"))
+
+head(penguins_raw)
+penguins_raw <- read.csv("C:/Users/Public/Documents/reproducible_data_science/penguins_raw")
+
+
+ggplot(data = penguins_raw,               
+       aes(x = Culmen.Depth..mm.,        
+           )) +
+  geom_histogram(bins = 4, show.legend = FALSE, fill =("light grey"))+
+   theme(text = element_text(size = 4))  
+
+
+
+
+```
+
+#### Question 3: **Discuss how colour choice is important for communication in science figures and what considerations should be made**
+
+Colour plays a vital role in how science figures are understood and communicated. Both solid colours and gradients can communicate information to a viewer far quicker than text and can give lasting first impressions about the data. A well chosen colour scheme can help the viewer intuitively identify important patterns and trends without over emphasising them and taking away from other parts of the figure. As the main goal of a figure is to accurately confer the information it displays to the audience with minimal confusion of misunderstanding colour must be used to enforce these principles.
+
+One consideration that should be made when designing a figure is for the colour map to be perceptually uniform. Meaning that there should be equal changes in colour despite its temperature, (warmer colours change as much as colder ones). So there shouldn't be two shades of blue neighbouring and green and red neighbouring as the first is very similar and the second is very different.
+
+This can help make the figure more intuitive to accurately convey data when a colour bar is not visible (due to cropping or deformity for example). However we should also consider that due to the anatomy of our eyes it is easier to distinguish small differences in colour for warmer colours such as reds or oranges whereas cooler colours like green may be harder. Meaning that uniform colour gradients may need to compensate for this with slightly harsher gradients for these cooler colours.
+
+Colours should also be chosen based of accessibility, meaning people with colour blindness should still be able to read the figure. To do this most commonly red and green shades should not have the same brightness to help distinguish between them for people with red green colour blindness. These colour maps can be mathematically calibrated to be the most accurate with colour appearance models.
+
+Rainbow colour models despite their popularity bad at conveying data accurately and unbiasedly. They do not comply with the considerations mentioned above and especially due to their vibrant spectrum of colours being used can easily over emphasize certain colours over others.
+
+#### Question 4: Run a statistical test on the Palmer Penguins data set and produce a figure to explain it.
+
+Find the code and figures at the following GitHub repository link: <https://github.com/DrosophilaEnjoyer/Penguin_assignment.git>
+
+#### Question 5: **Download someone else's example from Question 04 and review your thoughts**
+
+Here is my partners code <https://github.com/1053914/penguin_assignment>
+
+The code runs correctly when loaded and it is well laid out with the different chunks separated and labelled clearly. The titles at the beginning of each chunk allowed for me to distinguish the basic function of each code chunk. Furthermore the way the code is set up allows for a logical progression through the steps which are needed to recreate this code. All directories work correctly and files are created in appropriate areas
+
+To increase undesirability of this code I would go into more detail about the functionality of each of the pipelines before each of their respective chunks. This would allow for someone recreating it to understand the functions being created, meaning if they needed to edit it in any way to fit their study it could be done more easily. This could save time by preventing correspondence back and forth about the codes functionality.
+
+A higher level of modularity could also be taken advantage of to increase reproducibility. Having the functions in a separate R document and also uploaded to GitHub could allow for easier implementation of these functions in other pieces of code.
+
+If I had to alter this code it would be relatively simple to do so as I would not have to change the functions and all I would have to update is the the variables relating to the graph parameters I wanted to change. All of the areas of code needed to do this are clearly displayed in the code comments and so can be found easily.
+
+I have learned greatly both from his code and comments. I would agree that installing packages in a different code chunk or even a different document uploaded separately to GitHub would be beneficial for increasing reproducibility. Furthermore, writing the penguins data as a csv would also be beneficial and easily amendable. However, I would say that using ggplot for my graphs while it is very capable and widely used is not vital. Primarily because it depends on the preferences of the person viewing my code to decide which they may find preferable, for some this may be base r plotting as oppose to ggplot.
+
+Finally I learned that when writing code for others you should assume that they know nothing about the code you are writing or the data set being used, this helps to create a document that walks people with even a base understanding of r through your process allowing them to more eaisly reproduce your code. Furthermore functions the use of functions which I did not fully explore in my own code can be used to compartmentalize code and make it easier to use in other projects as people may only want parts of your code for their uses.
